@@ -83,7 +83,7 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['item', 'product-category', 'product-subject', 'region'],
+                    'controller' => ['item', 'region', 'place'],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -99,8 +99,13 @@ $config = [
                     'controller' => ['data'],
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'landing' => 'landing',
-                        'catalog' => 'catalog',
+                        'regions' => 'regions',
+                        'regions/<regionId>' => 'region',
+                        'places' => 'places',
+                        'places/<placeId>' => 'place',
+                        'projects' => 'projects',
+                        'projects/<projectId>' => 'project',
+                        'project-types' => 'project-types',
                         // 'OPTIONS landing' => 'options',
                     ]
                 ],

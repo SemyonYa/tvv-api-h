@@ -5,21 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "item_type".
+ * This is the model class for table "project_type".
  *
  * @property int $id
  * @property string $name
  *
- * @property Item[] $items
+ * @property Project[] $projects
  */
-class ItemType extends \yii\db\ActiveRecord
+class ProjectType extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'item_type';
+        return 'project_type';
     }
 
     /**
@@ -30,7 +30,7 @@ class ItemType extends \yii\db\ActiveRecord
         return [
             [['id', 'name'], 'required'],
             [['id'], 'integer'],
-            [['name'], 'string', 'max' => 50],
+            [['name'], 'string', 'max' => 100],
             [['id'], 'unique'],
         ];
     }
@@ -47,12 +47,12 @@ class ItemType extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Items]].
+     * Gets query for [[Projects]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getItems()
+    public function getProjects()
     {
-        return $this->hasMany(Item::className(), ['item_type_id' => 'id']);
+        return $this->hasMany(Project::className(), ['project_type_id' => 'id']);
     }
 }

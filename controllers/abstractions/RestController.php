@@ -16,7 +16,7 @@ abstract class RestController extends ActiveController
 
         $authenticatorWithoutBearer = $behaviors['authenticator'];
         $behaviors['authenticator'] = ['class' => HttpBearerAuth::class];
-        $controllersWithoutBearer = ['auth', 'data', 'region']; //, 'product', 'image'
+        $controllersWithoutBearer = ['auth', 'data', 'region', 'place',];
         if (in_array(Yii::$app->controller->id, $controllersWithoutBearer)) {
             $behaviors['authenticator'] = $authenticatorWithoutBearer;
         }

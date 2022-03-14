@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Inflector;
 
 /**
  * This is the model class for table "place".
@@ -87,5 +88,25 @@ class Place extends \yii\db\ActiveRecord
     public function getRegion()
     {
         return $this->hasOne(Region::className(), ['id' => 'region_id']);
+    }
+
+    public function fields()
+    {
+        $fields = array_merge(
+            parent::fields(),
+            [
+                'regionName' => function ($model) {
+                    return $model->region->name;
+                },
+                'image',
+            ]
+        );
+        unset($fields['imageId']);
+        $formattedFields = [];
+        foreach ($fields as $key => $name) {
+            $formattedFields[Inflector::variablize($key)] = $name;
+        }
+
+        return $formattedFields;
     }
 }

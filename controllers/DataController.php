@@ -4,9 +4,13 @@ namespace app\controllers;
 
 use app\controllers\abstractions\RestController;
 use app\models\Item;
+use app\models\Place;
 use app\models\Product;
 use app\models\ProductCategory;
 use app\models\ProductSubject;
+use app\models\Project;
+use app\models\ProjectType;
+use app\models\Region;
 
 class DataController extends RestController
 {
@@ -23,21 +27,40 @@ class DataController extends RestController
         return $actions;
     }
 
-    public function actionLanding()
+    public function actionRegions()
     {
-        return Item::find()->orderBy('sequence ASC')->all();
+        return Region::find()->orderBy('name ASC')->all();
     }
 
-    public function actionCatalog()
+    public function actionRegion($regionId)
     {
-        $categories = ProductCategory::find()->asArray()->all();
-        foreach ($categories as $key => $_) {
-            unset($categories[$key]['products']);
-        }
-        return [
-            'categories' => $categories,
-            'subjects' => ProductSubject::find()->all(),
-            'products' => Product::find()->all(),
-        ];
+        return Region::findOne($regionId);
+    }
+
+    public function actionPlaces($regionId)
+    {
+        return Place::find()
+            ->where(['region_id' => $regionId])
+            ->all();
+    }
+
+    public function actionPlace($placeId)
+    {
+        return Place::findOne($placeId);
+    }
+
+    public function actionProjects($placeId)
+    {
+        return Project::find()->where(['place_id' => $placeId])->all();
+    }
+
+    public function actionProject($projectId)
+    {
+        return Project::findOne($projectId);
+    }
+
+    public function actionProjectTypes()
+    {
+        return ProjectType::find()->all();
     }
 }

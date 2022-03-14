@@ -67,7 +67,7 @@ class Image extends \yii\db\ActiveRecord
         $h = $m_data['computed.Height'];
         $s = ($w > $h) ? $w : $h;
         if ($s > 1920) {
-            $image->thumbnail(new Box(1920, 1920))->save($path . $this->name, ['quality' => 60]);
+            $image->thumbnail(new Box(1920, 1920))->save($path . $this->name, ['quality' => 100]);
         }
         $image->thumbnail(new Box(960, 960))->save($path . '_' . $this->name, ['quality' => 50]);
         $image->thumbnail(new Box(360, 360))->save($path . '__' . $this->name, ['quality' => 50]);
@@ -92,7 +92,7 @@ class Image extends \yii\db\ActiveRecord
     {
         // $fields = parent::fields();
         $fields = array_merge(parent::fields(), ['thumb', 'medium', 'large']);
-        unset($fields['name']);
+        unset($fields['name'], $fields['deleted']);
         return $fields;
     }
 

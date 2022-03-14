@@ -5,24 +5,25 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "product_image".
+ * This is the model class for table "project_image".
  *
  * @property int $id
- * @property int $product_id
+ * @property int $project_id
  * @property int $image_id
  * @property int $is_main
+ * @property int $is_after
  *
  * @property Image $image
- * @property Product $product
+ * @property Project $project
  */
-class ProductImage extends \yii\db\ActiveRecord
+class ProjectImage extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'product_image';
+        return 'project_image';
     }
 
     /**
@@ -31,10 +32,10 @@ class ProductImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'image_id'], 'required'],
-            [['product_id', 'image_id', 'is_main'], 'integer'],
+            [['project_id', 'image_id', 'is_after'], 'required'],
+            [['project_id', 'image_id', 'is_main', 'is_after'], 'integer'],
+            [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
             [['image_id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::className(), 'targetAttribute' => ['image_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -45,9 +46,10 @@ class ProductImage extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'product_id' => 'Product ID',
+            'project_id' => 'Project ID',
             'image_id' => 'Image ID',
             'is_main' => 'Is Main',
+            'is_after' => 'Is After',
         ];
     }
 
@@ -62,12 +64,12 @@ class ProductImage extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Product]].
+     * Gets query for [[Project]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProduct()
+    public function getProject()
     {
-        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+        return $this->hasOne(Project::className(), ['id' => 'project_id']);
     }
 }
